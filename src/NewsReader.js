@@ -3,14 +3,18 @@ import { Articles } from './Articles';
 import { useState, useEffect } from 'react';
 import { exampleQuery, exampleData } from './data';
 import { SavedQueries } from './SavedQueries';
+import { LoginForm } from './LoginForm';
 
 export function NewsReader() {
   const [query, setQuery] = useState(exampleQuery);
   const [data, setData] = useState(exampleData);
   const [queryFormObject, setQueryFormObject] = useState({ ...exampleQuery });
   const [savedQueries, setSavedQueries] = useState([{ ...exampleQuery }]);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [credentials, setCredentials] = useState({ user: "", password: "" });
   const urlNews = "/news";
   const urlQueries = "/queries";
+  const urlUsersAuth = "/users/authenticate";
 
   useEffect(() => {
     getNews(query);
@@ -46,6 +50,31 @@ export function NewsReader() {
       console.log("savedQueries array has been persisted:");
     } catch (error) {
       console.error('Error fetching news:', error);
+    }
+  }
+
+  async function login() {
+    if (currentUser) {
+      setCurrentUser(null);
+      return;
+    }
+
+    try {
+      const response = await fetch(urlUsersAuth, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(credentials),
+      });
+      if (response.status === 200) {
+        setCurrentUser(credentials.user);
+        setCredentials({ user: "", password: "" });
+      } else {
+        alert("err during authentication, update credentials and try again");
+        setCurrentUser(null);
+      }
+    } catch (error) {
+      console.error('Error fetching news:', error);
+      setCurrentUser(null);
     }
   }
 
@@ -96,6 +125,12 @@ export function NewsReader() {
 
   return (
     <div>
+      <LoginForm
+        login={login}
+        credentials={credentials}
+        currentUser={currentUser}
+        setCredentials={setCredentials}
+      />
       <div>
         <section className="parent">
           <div className="box">
