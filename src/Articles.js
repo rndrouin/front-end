@@ -12,7 +12,7 @@ export function Articles(params) {
   }
 
   return (
-    <div>
+    <div style={{ height: "200px", overflowY: "auto" }}> {/* Set a predefined height and enable scrolling */}
       <div>
         <button onClick={toggleQueryDetails} style={{ fontSize: "0.8rem" }}>
           {showQueryDetails ? 'Hide Query Details' : 'Show Query Details'}
