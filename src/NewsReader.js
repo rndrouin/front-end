@@ -15,6 +15,7 @@ export function NewsReader() {
   const urlNews = "/news";
   const urlQueries = "/queries";
   const urlUsersAuth = "/users/authenticate";
+  const [showQueryDetails, setShowQueryDetails] = useState(false);
 
   useEffect(() => {
     getNews(query);
@@ -77,20 +78,18 @@ export function NewsReader() {
       setCurrentUser(null);
     }
   }
+  
   function currentUserMatches(user) {
-    if (currentUser === user) {
-      return true;
-    }
-    return false;
+    return currentUser === user;
   }
 
   function onFormSubmit(queryObject) {
-    if (currentUser === null){
-      alert("Log in if you want to create new queries!")
+    if (currentUser === null) {
+      alert("Log in if you want to create new queries!");
       return;
-      }
+    }
     if (savedQueries.length >= 3 && currentUserMatches("guest")) {
-      alert("guest users cannot submit new queries once saved query count is 3 or greater!");
+      alert("Guest users cannot submit new queries once saved query count is 3 or greater!");
       return;
     }
   
@@ -151,7 +150,6 @@ export function NewsReader() {
           <div className="box">
             <span className='title'>Query Form</span>
             <QueryForm
-              //added in step 4
               currentUser={currentUser}
               setFormObject={setQueryFormObject}
               formObject={queryFormObject}
@@ -168,7 +166,12 @@ export function NewsReader() {
           </div>
           <div className="box">
             <span className='title'>Articles List</span>
-            <Articles query={query} data={data} />
+            <Articles
+              query={query}
+              data={data}
+              showQueryDetails={showQueryDetails}
+              toggleQueryDetails={() => setShowQueryDetails(!showQueryDetails)}
+            />
           </div>
         </section>
       </div>
