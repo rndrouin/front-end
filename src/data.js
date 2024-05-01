@@ -1,4 +1,7 @@
-export const exampleQuery = {"queryName":"Query01","q":"work","language":"en","pageSize":10};
+export const exampleQuery = {"queryName":"Query01","q":"news","language":"en","pageSize":10};
+//export const exampleQuery02 = {"queryName":"Query02","q":"news","language":"en","pageSize":10};
+//export const exampleQuery03 = {"queryName":"Query03","q":"news","language":"en","pageSize":10};
+
 export const exampleData = { "status": "ok", 
                             "totalResults": 3, 
                             "articles": [{ "source": { "id": "cnn", "name": "CNN" }, 

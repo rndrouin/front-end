@@ -24,7 +24,8 @@ export function SavedQueries(params) {
       });
     } else {
       return params.savedQueries.map((item, idx) => {
-        let trimTitle = item.queryName.substring(0, 30);
+        let trimTitle = item.queryName//.substring(0, 30);
+        console.log(item)
         return (
           <li
             key={idx}

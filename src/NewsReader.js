@@ -113,6 +113,26 @@ export function NewsReader() {
     setQuery(selectedQuery);
   }
 
+  function resetSavedQueries() {
+    if (window.confirm('Are you sure you want to erase the list?')) {
+      const exampleQuery02 = {
+        queryName: "Query02",
+        q: "sports",
+        language: "en",
+        pageSize: 10
+      };
+      const exampleQuery03 = {
+        queryName: "Query03",
+        q: "music",
+        language: "en",
+        pageSize: 10
+      };
+      const emptySavedQueries = [exampleQuery03, exampleQuery02, exampleQuery ];
+      saveQueryList(emptySavedQueries);
+      setSavedQueries(emptySavedQueries);
+    }
+  }
+
   async function getNews(queryObject) {
     if (!queryObject.q) {
       setData({});
@@ -162,6 +182,7 @@ export function NewsReader() {
           ) : null}
           <div className="box">
             <span className="title">Saved Queries</span>
+            {currentUser && <button onClick={resetSavedQueries}>Reset</button>}
             <SavedQueries
               savedQueries={savedQueries}
               selectedQueryName={query.queryName}
